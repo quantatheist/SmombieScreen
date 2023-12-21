@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="de">
+<!--<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Image Viewer</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>-->
+<head>
+    <!--<meta charset="utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="viewport-fit=cover, user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">-->
+    <title>Image Viewer</title>
+    <style>
+        .frame {
+            background-color: #fff; /* Fallback background color */
+            background-image: none; /* Remove background image */
+        }
+
+        .image {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+        }
+    </style>
+</head>
+<body class="container">
+<div class="row">
+    <div class="">
+        <!--<h1 id="headline" class="image">Image Viewer</h1>-->
+        <div id="image-container" class="card">
+            <img id="displayed-image" class="card-img-top image" src="https://media.tenor.com/punj70NkFc0AAAAC/the-simpsons-why-didnt-i-think-of-that.gif" alt="Image">
+        </div>
+    </div>
+</div>
+
+<!--<script>
+    const oneHour = 60 * 60 * 1000;
+
+    const loadImage = () => {
+        console.log("loadImage");
+        fetch("/latest")
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("data", data);
+                const imageUrl = `/uploads/${data.filename}`;
+                const created_at = data.created_at;
+
+                console.log("imageUrl", imageUrl);
+                console.log("created_at", created_at);
+
+                if (Date.now() - new Date(created_at).getTime() < oneHour) {
+                    document.getElementById("displayed-image").src = imageUrl;
+                } else {
+                    // Load a random image from the server
+                    fetch("/favs")
+                        .then((response) => response.json())
+                        .then((data) => {
+                            //const randomResource = data.resources[Math.floor(Math.random() * data.resources.length)];
+                            document.getElementById("displayed-image").src = `https://static.wikia.nocookie.net/simpsons/images/e/e9/Nelson_Ha-Ha.jpg`;
+                        });
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    };
+
+    window.addEventListener("load", () => {
+        loadImage();
+        setInterval(loadImage, 30 * 1000); // Check for a new image every 30 seconds.
+    });
+</script>-->
+<script>
+//working
+    document.getElementById("headline").innerHTML = "Test";
+
+    var oneHour = 60 * 60 * 1000;
+    var xhr = new XMLHttpRequest();
+
+    /*const loadLatest = () => {
+        console.log("loadLatest");
+        return fetch("/latest")
+            .then((response) => {
+                console.log(response.json());
+            });
+    };
+
+    const renderImage = (resource) => {
+        console.log("renderImage")
+        //document.body.style.backgroundImage = `url('${resource}')`;
+
+        var image = "https://e7.pngegg.com/pngimages/476/159/png-clipart-pokemon-pikachu-pikachu-pokemon-games-pokemon-thumbnail.png";
+        document.getElementById("displayed-image").src = image;
+    };
+
+    const nextImage = () => {
+        console.log("nextImage");
+        const resource = loadLatest().then((resource) => {
+                renderImage(resource);
+        });
+
+        setTimeout(nextImage, 30 * 1000);
+    };*/
+
+    function loadImage() {
+        console.log("loadImage");
+        
+        //working
+        //var image = "https://e7.pngegg.com/pngimages/476/159/png-clipart-pokemon-pikachu-pikachu-pokemon-games-pokemon-thumbnail.png";
+        //document.getElementById("displayed-image").src = image;
+        
+           //document.getElementById("headline").innerHTML = Date();
+
+
+// not working
+       /* fetch("/latest")
+            .then(function (response) {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then(function (data) {
+                console.log("data", data);
+                
+                   document.getElementById("headline").innerHTML = "latest :" + Date();
+
+                
+                var imageUrl = "/uploads/" + data.filename;
+                var created_at = data.created_at;
+
+                console.log("imageUrl", imageUrl);
+                console.log("created_at", created_at);
+
+                if (Date.now() - new Date(created_at).getTime() < oneHour) {
+                    document.getElementById("displayed-image").src = imageUrl;
+                } else {
+                    // Load a random image from the server
+                    fetch("/favs")
+                        .then(function (response) {
+                            if (!response.ok) {
+                                throw new Error("Network response was not ok");
+                            }
+                            return response.json();
+                        })
+                        .then(function (data) {
+                            if (Array.isArray(data) && data.length > 0) {
+                                var randomResource = data[Math.floor(Math.random() * data.length)];
+                                document.getElementById("displayed-image").src = "https://static.wikia.nocookie.net/simpsons/images/e/e9/Nelson_Ha-Ha.jpg";
+                            } else {
+                                throw new Error("No resources found in the response");
+                            }
+                        });
+                }
+            })
+            .catch(function (error) {
+                console.error("An error occurred:", error);
+            });
+    */
+            
+
+xhr.open("GET", "/latest", true);
+xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4) {
+        if (xhr.status == 200) {
+            try {
+                var data = JSON.parse(xhr.responseText);
+                
+                console.log("data", data);
+                
+                document.getElementById("headline").innerHTML = "latest: " + Date();
+
+                var imageUrl = "/uploads/" + data.filename;
+                var created_at = data.created_at;
+
+                console.log("imageUrl", imageUrl);
+                console.log("created_at", created_at);
+
+                if (Date.now() - new Date(created_at).getTime() < oneHour) {
+                    document.getElementById("displayed-image").src = imageUrl;
+                } else {
+                    // Load a random image from the server
+                    var xhr2 = new XMLHttpRequest();
+                    xhr2.open("GET", "/favs", true);
+                    xhr2.onreadystatechange = function() {
+                        if (xhr2.readyState == 4) {
+                            if (xhr2.status == 200) {
+                                try {
+                                    var data = JSON.parse(xhr2.responseText);
+                                    if (Array.isArray(data) && data.length > 0) {
+                                        var randomResource = data[Math.floor(Math.random() * data.length)];
+                                        document.getElementById("displayed-image").src = "https://static.wikia.nocookie.net/simpsons/images/e/e9/Nelson_Ha-Ha.jpg";
+                                    } else {
+                                        throw new Error("No resources found in the response");
+                                    }
+                                } catch (error) {
+                                    console.error("An error occurred:", error);
+                                }
+                            } else {
+                                console.error("Network response was not ok");
+                            }
+                        }
+                    };
+                    xhr2.send();
+                }
+            } catch (error) {
+                console.error("An error occurred:", error);
+            }
+        } else {
+            console.error("Network response was not ok");
+        }
+    }
+};
+xhr.send();
+}
+
+    window.addEventListener("load", function () {
+           document.getElementById("headline").innerHTML = "load";
+
+        
+        loadImage();
+        
+        
+        setInterval(loadImage, 30000); // Check for a new image every 30 seconds.
+    });
+
+    //window.addEventListener("load", () => nextImage());
+</script>
+</body>
+</html>
